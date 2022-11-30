@@ -5,15 +5,10 @@ services:
     build: rabbitmq/
     container_name: rabbitmq
     hostname: rabbitmq
-    volumes:
-      - rabbitmq-data:/var
     ports:
       - "1883:1883"
       - "5672:5672"
       - "15672:15672"
     environment:
-      RABBITMQ_DEFAULT_USER: "rabbitmq"
-      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-
-volumes:
-  rabbitmq-data:
+      RABBITMQ_DEFAULT_USER: "myuser"
+      RABBITMQ_DEFAULT_PASS: "mypassword"
