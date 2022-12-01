@@ -1,38 +1,31 @@
 spring:
+
+  data:
+    mongodb:
+      uri: ""
+      username: ""
+      password: ""
+
   rabbitmq:
     username: myuser
     password: mypassword
+
   cloud:
     stream:
       bindings:
         sensorDataConsumer-in-0:
           destination: amq.topic
-#          binder: rabbitmqtt
           group: sensor.data.group
           consumer:
             queueNameGroupOnly: true
             bindingRoutingKey: ".sensor"
       rabbit:
-          bindings:
-            sensorDataConsumer-in-0:
-              consumer:
-                queueNameGroupOnly: true
-                bindingRoutingKey: "*.sensor"
-#      rabbit:
-#        bindings:
-#          input:
-#            consumer:
-#              queueNameGroupOnly: true
-#              bindingRoutingKey: ".sensor"
-#      binders:
-#        rabbitmqtt:
-#          type: rabbit
-#          defaultCandidate: false
-#          inheritEnvironment: false
-#          environment:
-#            spring:
-#              rabbitmq:
-#                host: localhost
-#                port: 5672
-#                username: rabbitmq
-#                password: rabbitmq
+        bindings:
+          sensorDataConsumer-in-0:
+            consumer:
+              queueNameGroupOnly: true
+              bindingRoutingKey: "*.sensor"
+
+elasticsearch:
+  host: ""
+  port: ""
