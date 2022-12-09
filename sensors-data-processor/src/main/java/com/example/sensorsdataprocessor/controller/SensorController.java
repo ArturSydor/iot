@@ -1,9 +1,9 @@
 package com.example.sensorsdataprocessor.controller;
 
-import com.example.sensorsdataprocessor.model.mongo.Sensor;
+import com.example.sensorsdataprocessor.dto.SensorDto;
+import com.example.sensorsdataprocessor.mapper.SensorMapper;
 import com.example.sensorsdataprocessor.service.SensorService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,19 +16,24 @@ public class SensorController {
 
     private final SensorService service;
 
+    private final SensorMapper sensorMapper;
+
     @GetMapping("/{id}")
-    public Sensor getOneById(@Header("X-Tenant") String tenantId, @PathVariable String id) {
-        return service.getOneById(tenantId, id);
+    public SensorDto getOneById(@PathVariable String id) {
+        return sensorMapper.toDto(service.getOneById(id));
     }
 
     @GetMapping
-    public List<Sensor> getAll(@Header("X-Tenant") String tenantId) {
-        return service.getAll(tenantId);
+    public List<SensorDto> getAll() {
+        return service.getAll().stream()
+                .map(sensorMapper::toDto)
+                .toList();
     }
 
     @PutMapping
-    public Sensor createOrUpdate(@Valid @RequestBody Sensor sensor) {
-        return service.createOrUpdate(sensor);
+    public SensorDto createOrUpdate(@Valid @RequestBody SensorDto sensorDto) {
+        var sensor = sensorMapper.toModel(sensorDto);
+        return sensorMapper.toDto(service.createOrUpdate(sensor));
     }
 
 }

@@ -3,15 +3,24 @@ package com.example.sensorsdataprocessor.model.mongo;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
 @Document("sensors")
+@CompoundIndex(def = """
+        {
+            'tenantId': 1,
+            'token': 1
+        }
+        """, unique = true)
 public class Sensor {
 
     @Id
@@ -24,12 +33,10 @@ public class Sensor {
     @NotBlank
     private String token;
 
-    @DecimalMin("-90")
-    @DecimalMax("90")
+    @NotNull
     private BigDecimal latitude;
 
-    @DecimalMin("-180")
-    @DecimalMax("180")
+    @NotNull
     private BigDecimal longitude;
 
     private String name;

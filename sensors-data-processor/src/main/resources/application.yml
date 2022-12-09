@@ -6,7 +6,8 @@ spring:
       port: 27017
       database: iot
       username: admin
-      password: admin
+      password: secret
+      authentication-database: admin
 
   rabbitmq:
     username: myuser

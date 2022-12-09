@@ -2,6 +2,7 @@ package com.example.sensorsdataprocessor.service;
 
 import com.example.sensorsdataprocessor.model.mongo.Sensor;
 import com.example.sensorsdataprocessor.repository.SensorRepository;
+import com.example.sensorsdataprocessor.tenant.TenantHolder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +14,17 @@ public class SensorService {
 
     private final SensorRepository repository;
 
-    public Sensor getOneById(String tenantId, String id) {
-        return repository.findByTenantIdAndId(tenantId, id)
+    public Sensor getOneById(String id) {
+        return repository.findByTenantIdAndId(TenantHolder.get(), id)
                 .orElseThrow(() -> new RuntimeException("Sensor not found"));
     }
 
-    public List<Sensor> getAll(String tenantId) {
-        return repository.findAllByTenantId(tenantId);
+    public List<Sensor> getAll() {
+        return repository.findAllByTenantId(TenantHolder.get());
     }
 
-    public boolean isSensorTokenValid(String tenantId, String token) {
-        return repository.findByTenantIdAndId(tenantId, token).isPresent();
+    public boolean isSensorTokenValid(String token) {
+        return repository.findByTenantIdAndToken(TenantHolder.get(), token).isPresent();
     }
 
     public Sensor createOrUpdate(Sensor sensor) {
