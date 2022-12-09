@@ -29,5 +29,5 @@ spring:
               bindingRoutingKey: "*.sensor"
 
 elasticsearch:
-  host: ""
-  port: ""
+  hostname: "localhost"
+  port: "9200"

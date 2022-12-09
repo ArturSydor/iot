@@ -1,4 +1,4 @@
-package com.example.sensorsdataprocessor.dto;
+package com.example.sensorsdataprocessor.model.elastic;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,7 +14,9 @@ import java.util.Map;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString
-public class SensorData {
+public class SensorData implements Document {
+
+    private static final String INDEX_BASE_NAME = "sensors";
 
     private String id;
     private Long timestamp;
@@ -22,4 +24,9 @@ public class SensorData {
     private String token;
 
     private Map<String, Object> extraFields = new HashMap<>();
+
+    @Override
+    public String baseIndexName() {
+        return INDEX_BASE_NAME;
+    }
 }

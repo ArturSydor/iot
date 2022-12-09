@@ -1,6 +1,7 @@
 package com.example.sensorsdataprocessor.config;
 
-import com.example.sensorsdataprocessor.dto.SensorData;
+import com.example.sensorsdataprocessor.model.elastic.SensorData;
+import com.example.sensorsdataprocessor.service.ElasticService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.*;
@@ -14,10 +15,13 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor
 public class RabbitConfig {
 
+    private final ElasticService elasticService;
+
     @Bean
     public Consumer<SensorData> sensorDataConsumer() {
         return event -> {
             log.info("Received an event: {}", event);
+            elasticService.save(event);
         };
     }
 
