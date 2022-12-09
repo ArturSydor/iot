@@ -2,9 +2,11 @@ spring:
 
   data:
     mongodb:
-      uri: ""
-      username: ""
-      password: ""
+      host: localhost
+      port: 27017
+      database: iot
+      username: admin
+      password: admin
 
   rabbitmq:
     username: myuser
