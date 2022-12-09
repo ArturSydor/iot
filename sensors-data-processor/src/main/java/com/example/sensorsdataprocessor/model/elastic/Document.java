@@ -6,7 +6,7 @@ public interface Document {
 
     default String indexName(String tenantId) {
         Objects.requireNonNull(tenantId);
-        return String.format("%s_%s", tenantId, baseIndexName());
+        return String.format("iot_%s_%s", tenantId, baseIndexName());
     }
 
     String baseIndexName();

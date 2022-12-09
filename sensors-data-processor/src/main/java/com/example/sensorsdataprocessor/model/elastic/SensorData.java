@@ -6,8 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -19,11 +18,9 @@ public class SensorData implements Document {
     private static final String INDEX_BASE_NAME = "sensors";
 
     private String id;
-    private Long timestamp;
+    private Date timestamp;
     private String tenantId;
     private String token;
-
-    private Map<String, Object> extraFields = new HashMap<>();
 
     @Override
     public String baseIndexName() {
