@@ -6,16 +6,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.Date;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
-@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class SensorData implements Document {
-    private String id;
-    private Date timestamp;
-    private String tenantId;
-    private String token;
+@ToString(callSuper = true)
+public class AirQualitySensorData extends SensorData {
+
+    private static final String INDEX_BASE_NAME = "air_quality";
+
+    private BigDecimal dust;
+
+    @Override
+    public String baseIndexName() {
+        return INDEX_BASE_NAME;
+    }
 }

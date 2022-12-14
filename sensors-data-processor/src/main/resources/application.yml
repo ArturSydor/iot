@@ -14,20 +14,39 @@ spring:
     password: mypassword
 
   cloud:
+    function:
+      definition: weatherDataConsumer;waterQualityDataConsumer;airQualityDataConsumer
     stream:
       bindings:
-        sensorDataConsumer-in-0:
+        weatherDataConsumer-in-0:
           destination: amq.topic
-          group: sensor.data.group
-          consumer:
-            queueNameGroupOnly: true
-            bindingRoutingKey: ".sensor"
+          group: weather.data.group
+        waterQualityDataConsumer-in-0:
+          destination: amq.topic
+          group: water_quality.data.group
+        airQualityDataConsumer-in-0:
+          destination: amq.topic
+          group: air_quality.data.group
       rabbit:
         bindings:
-          sensorDataConsumer-in-0:
+          weatherDataConsumer-in-0:
             consumer:
               queueNameGroupOnly: true
-              bindingRoutingKey: "*.sensor"
+              bindingRoutingKey: "#.weather"
+          waterQualityDataConsumer-in-0:
+            consumer:
+              queueNameGroupOnly: true
+              bindingRoutingKey: "#.water_quality"
+          airQualityDataConsumer-in-0:
+            consumer:
+              queueNameGroupOnly: true
+              bindingRoutingKey: "#.air_quality"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 elasticsearch:
   hostname: "localhost"
