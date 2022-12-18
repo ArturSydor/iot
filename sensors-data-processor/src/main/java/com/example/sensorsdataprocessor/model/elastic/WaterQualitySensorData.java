@@ -18,6 +18,10 @@ public class WaterQualitySensorData extends SensorData {
     private static final String INDEX_BASE_NAME = "water_quality";
 
     private BigDecimal waterTemperature;
+    private BigDecimal turbidity;
+    private BigDecimal transducerDepth;
+    private BigDecimal waveHeight;
+    private Integer wavePeriod;
 
     @Override
     public String baseIndexName() {

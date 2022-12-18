@@ -1,0 +1,7 @@
+{
+  "data_view": {
+    "title": "iot_*_water_quality",
+    "name": "iot_*_water_quality",
+    "timeFieldName": "timestamp"
+  }
+}

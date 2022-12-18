@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "index_patterns": [
-    "iot_*_sensors"
+    "iot_*_"
   ],
   "template": {
     "settings": {

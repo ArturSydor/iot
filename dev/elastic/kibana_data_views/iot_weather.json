@@ -1,0 +1,7 @@
+{
+  "data_view": {
+    "title": "iot_*_weather",
+    "name": "iot_*_weather",
+    "timeFieldName": "timestamp"
+  }
+}

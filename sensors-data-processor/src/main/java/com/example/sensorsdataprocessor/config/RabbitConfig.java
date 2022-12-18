@@ -42,8 +42,7 @@ public class RabbitConfig {
         log.info("Received an event: {}", event);
         TenantHolder.put(event.getTenantId());
         if (sensorService.isSensorTokenValid(event.getToken())) {
-            // FIXME   elasticService.save(event);
-            log.warn("Class: {}, index: {}", event.getClass().getName(), event.baseIndexName());
+            elasticService.save(event);
         } else {
             log.error("Invalid sensor data for entry: {}", event);
         }

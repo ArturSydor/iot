@@ -1,0 +1,7 @@
+{
+  "data_view": {
+    "title": "iot_*_air_quality",
+    "name": "iot_*_air_quality",
+    "timeFieldName": "timestamp"
+  }
+}

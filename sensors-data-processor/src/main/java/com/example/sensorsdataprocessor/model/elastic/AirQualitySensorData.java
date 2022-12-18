@@ -17,6 +17,10 @@ public class AirQualitySensorData extends SensorData {
 
     private static final String INDEX_BASE_NAME = "air_quality";
 
+    private BigDecimal n2o;
+    private BigDecimal o3;
+    private BigDecimal co2;
+    private BigDecimal so2;
     private BigDecimal dust;
 
     @Override
