@@ -12,6 +12,8 @@ spring:
   rabbitmq:
     username: myuser
     password: mypassword
+    host:
+    port:
 
   cloud:
     function:

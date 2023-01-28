@@ -1,6 +1,38 @@
 version: '3.8'
 
 services:
+  sensor-data-processor:
+    build: ../sensors-data-processor
+    container_name: sensors-data-processor
+    hostname: sensors-data-processor
+    depends_on:
+      - elasticsearch
+      - mongodb
+    environment:
+      ELASTICSEARCH_HOSTNAME: "elasticsearch"
+      ELASTICSEARCH_PORT: 9200
+      SPRING_RABBITMQ_HOST: "rabbitmq"
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: "myuser"
+      SPRING_RABBITMQ_PASSWORD: "mypassword"
+      SPRING_DATA_MONGODB_HOST: "mongodb"
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: "iot"
+      SPRING_DATA_MONGODB_USERNAME: "admin"
+      SPRING_DATA_MONGODB_PASSWORD: "secret"
+
+  data-generator:
+    build: ../sensors-data-generator
+    container_name: data-generator
+    hostname: data-generator
+    depends_on:
+      - rabbitmq
+    environment:
+      BROKER_HOST: "rabbitmq"
+      BROKER_PORT: 1883
+      BROKER_USER: "myuser"
+      BROKER_PASSWORD: "mypassword"
+
   rabbitmq:
     build: rabbitmq/
     container_name: rabbitmq
@@ -27,6 +59,8 @@ services:
 
   elasticsearch:
     image: elasticsearch:8.5.1
+    container_name: elasticsearch
+    hostname: elasticsearch
     environment:
       - discovery.type=single-node
       - ES_JAVA_OPTS=-Xms1g -Xmx1g

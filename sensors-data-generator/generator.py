@@ -1,5 +1,6 @@
 import decimal
 import json
+import os
 import random
 import time
 
@@ -74,14 +75,21 @@ def publish_message(topic: str, data_supplier):
     print(result)
 
 
-broker = "localhost"
-port = 1883
-username = "myuser"
-password = "mypassword"
+broker = os.getenv("BROKER_HOST")
+port = int(os.getenv("BROKER_PORT"))
+username = os.getenv("BROKER_USER")
+password = os.getenv("BROKER_PASSWORD")
 
 client = mqtt.Client()
 client.username_pw_set(username, password)
-client.connect(broker, port)
+is_connected = False
+while not is_connected:
+    try:
+        client.connect(broker, port)
+        is_connected = True
+    except Exception:
+        print("MQTT broker is not available yet")
+        time.sleep(1)
 
 iterations_count = random.randint(1, 10_000)
 for i in range(iterations_count):
