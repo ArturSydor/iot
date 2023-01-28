@@ -32,6 +32,11 @@ services:
       BROKER_PORT: 1883
       BROKER_USER: "myuser"
       BROKER_PASSWORD: "mypassword"
+      RUN_MODE: "ITERATION"
+      NUMBER_OF_ITERATIONS: 10000
+      WATER_QUALITY_TOPIC: "building/floor_1/bedroom/water_quality"
+      WEATHER_TOPIC: "building/weather"
+      AIR_QUALITY_TOPIC: "building/001/air_quality"
 
   rabbitmq:
     build: rabbitmq/
