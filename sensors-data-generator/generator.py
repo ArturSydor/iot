@@ -7,28 +7,37 @@ from enum import Enum
 
 import paho.mqtt.client as mqtt
 
-one_year_in_milliseconds = 31_556_952_000
-
 
 class RunMode(Enum):
     STREAM = "STREAM"
     ITERATION = "ITERATION"
 
 
+one_year_in_milliseconds = 31_556_952_000
+run_mode: RunMode = RunMode(os.getenv("RUN_MODE"))
+
+
 def random_decimal_string(min_value: int, max_value: int):
     return str(decimal.Decimal(random.randrange(min_value * 100, max_value * 100)) / 100)
 
 
+def get_current_time():
+    return round(time.time() * 1000)
+
+
 def random_time_from_last_year():
-    current_time = round(time.time() * 1000)
+    current_time = get_current_time()
     return random.randrange(current_time - one_year_in_milliseconds, current_time)
 
 
 def get_base_sensor_data():
     data = dict()
-    current_time = random_time_from_last_year()
-    data["id"] = current_time
-    data["timestamp"] = current_time
+    if run_mode == RunMode.STREAM:
+        timestamp = get_current_time()
+    else:
+        timestamp = random_time_from_last_year()
+    data["id"] = timestamp
+    data["timestamp"] = timestamp
     data["tenantId"] = "001"
     data["token"] = "123"
     return data
@@ -102,7 +111,6 @@ def create_client():
 
 
 def generate_sensor_data():
-    run_mode: RunMode = RunMode(os.getenv("RUN_MODE"))
     number_of_iterations: int = int(os.getenv("NUMBER_OF_ITERATIONS"))
     water_quality_topic = os.getenv("WATER_QUALITY_TOPIC")
     weather_topic = os.getenv("WEATHER_TOPIC")
@@ -136,36 +144,3 @@ def generate_sensor_data():
 
 
 generate_sensor_data()
-
-# broker = os.getenv("BROKER_HOST")
-# port: int = int(os.getenv("BROKER_PORT"))
-# username = os.getenv("BROKER_USER")
-# password = os.getenv("BROKER_PASSWORD")
-# run_mode: RunMode = RunMode(os.getenv("RUN_MODE"))
-# number_of_iterations: int = int(os.getenv("NUMBER_OF_ITERATIONS"))
-# water_quality_topic = os.getenv("WATER_QUALITY_TOPIC")
-# weather_topic = os.getenv("WEATHER_TOPIC")
-# air_quality_topic = os.getenv("AIR_QUALITY_TOPIC")
-#
-# client = mqtt.Client()
-# client.username_pw_set(username, password)
-# is_connected = False
-# while not is_connected:
-#     try:
-#         client.connect(broker, port)
-#         is_connected = True
-#     except Exception:
-#         print("MQTT broker is not available yet")
-#         time.sleep(1)
-#
-# iterations_count = random.randint(1, 10_000)
-# for i in range(iterations_count):
-#     sleep_duration = random.randint(0, 1)
-#
-#     publish_message("building/floor_1/bedroom/water_quality", get_water_quality_data)
-#     publish_message("building/weather", get_weather_data)
-#     publish_message("building/001/air_quality", get_air_quality_data)
-#
-#     time.sleep(sleep_duration)
-#     client.loop()
-# client.disconnect()
