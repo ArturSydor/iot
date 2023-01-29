@@ -34,9 +34,13 @@ public class Sensor {
     private String token;
 
     @NotNull
+    @DecimalMin(value = "-90")
+    @DecimalMax(value = "90")
     private BigDecimal latitude;
 
     @NotNull
+    @DecimalMin(value = "-180")
+    @DecimalMax(value = "180")
     private BigDecimal longitude;
 
     private String name;

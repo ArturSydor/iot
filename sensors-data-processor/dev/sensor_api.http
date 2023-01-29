@@ -1,0 +1,21 @@
+###
+GET http://localhost:8080/sensors/63937de7371b475618f46209
+X-Tenant: 001
+
+###
+GET http://localhost:8080/sensors
+X-Tenant: 001
+
+###
+PUT http://localhost:8080/sensors
+Content-Type: application/json
+X-Tenant: 001
+
+{
+  "id": "63937de7371b475618f46209",
+  "token": "123",
+  "latitude": 14.54,
+  "longitude": 34.43,
+  "name": "Temperature-outdoor",
+  "description": null
+}

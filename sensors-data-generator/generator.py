@@ -14,7 +14,11 @@ class RunMode(Enum):
 
 
 one_year_in_milliseconds = 31_556_952_000
+latitude = random.randrange(-90, 90)
+longitude = random.randrange(-180, 180)
 run_mode: RunMode = RunMode(os.getenv("RUN_MODE"))
+tenant = os.getenv("TENANT")
+sensor_token = os.getenv("SENSOR_TOKEN")
 
 
 def random_decimal_string(min_value: int, max_value: int):
@@ -38,8 +42,11 @@ def get_base_sensor_data():
         timestamp = random_time_from_last_year()
     data["id"] = timestamp
     data["timestamp"] = timestamp
-    data["tenantId"] = "001"
-    data["token"] = "123"
+    data["tenantId"] = tenant
+    data["token"] = sensor_token
+    data["location"] = dict()
+    data["location"]["lat"] = latitude
+    data["location"]["lon"] = longitude
     return data
 
 
@@ -118,6 +125,7 @@ def generate_sensor_data():
 
     client = create_client()
 
+    time.sleep(30)
     if run_mode == RunMode.STREAM:
         while True:
             publish_message(client, water_quality_topic, get_water_quality_data)
@@ -135,8 +143,6 @@ def generate_sensor_data():
             publish_message(client, water_quality_topic, get_water_quality_data)
             publish_message(client, weather_topic, get_weather_data)
             publish_message(client, air_quality_topic, get_air_quality_data)
-
-            time.sleep(1)
             client.loop()
     else:
         print("Not existing run mode: " + run_mode.__str__())

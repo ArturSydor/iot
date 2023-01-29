@@ -5,6 +5,8 @@ services:
     build: ../sensors-data-processor
     container_name: sensors-data-processor
     hostname: sensors-data-processor
+    ports:
+      - "8080:8080"
     depends_on:
       - elasticsearch
       - mongodb
@@ -28,13 +30,15 @@ services:
     depends_on:
       - rabbitmq
     environment:
+      TENANT: "002"
+      SENSOR_TOKEN: "123"
       BROKER_HOST: "rabbitmq"
       BROKER_PORT: 1883
       BROKER_USER: "myuser"
       BROKER_PASSWORD: "mypassword"
-      RUN_MODE: "STREAM"
-#      RUN_MODE: "ITERATION"
-      NUMBER_OF_ITERATIONS: 10000
+#      RUN_MODE: "STREAM"
+      RUN_MODE: "ITERATION"
+      NUMBER_OF_ITERATIONS: 20000
       WATER_QUALITY_TOPIC: "building/floor_1/bedroom/water_quality"
       WEATHER_TOPIC: "building/weather"
       AIR_QUALITY_TOPIC: "building/001/air_quality"

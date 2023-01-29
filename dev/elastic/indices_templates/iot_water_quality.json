@@ -21,6 +21,9 @@
         "token": {
           "type": "keyword"
         },
+        "location": {
+          "type": "geo_point"
+        },
         "water_temperature": {
           "type": "scaled_float",
           "scaling_factor": 100

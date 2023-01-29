@@ -23,7 +23,7 @@ public class ElasticService {
                     .index(indexName)
                     .document(document));
         } catch (IOException e) {
-            log.error("Failed to save document: {}. For index: {}", document, indexName);
+            log.error("Failed to save document: {}. For index: {}. Error: {}", document, indexName, e.getMessage());
             throw new IllegalStateException("Failed to save document", e);
         }
     }

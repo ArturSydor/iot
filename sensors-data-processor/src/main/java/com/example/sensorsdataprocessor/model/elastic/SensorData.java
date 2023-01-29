@@ -18,4 +18,5 @@ public abstract class SensorData implements Document {
     private Date timestamp;
     private String tenantId;
     private String token;
+    private Location location;
 }
