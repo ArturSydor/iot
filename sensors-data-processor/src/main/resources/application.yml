@@ -9,6 +9,10 @@ spring:
       password: secret
       authentication-database: admin
 
+  mail:
+    host: mail
+    port: 1025
+
   rabbitmq:
     username: myuser
     password: mypassword

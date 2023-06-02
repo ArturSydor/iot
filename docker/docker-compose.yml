@@ -30,14 +30,15 @@ services:
     depends_on:
       - rabbitmq
     environment:
-      TENANT: "002"
+      TENANT: "001"
       SENSOR_TOKEN: "123"
       BROKER_HOST: "rabbitmq"
       BROKER_PORT: 1883
       BROKER_USER: "myuser"
       BROKER_PASSWORD: "mypassword"
-#      RUN_MODE: "STREAM"
-      RUN_MODE: "ITERATION"
+      RUN_MODE: "STREAM"
+#      RUN_MODE: "ITERATION"
+#      RUN_MODE: "RANGE"
       NUMBER_OF_ITERATIONS: 20000
       WATER_QUALITY_TOPIC: "building/floor_1/bedroom/water_quality"
       WEATHER_TOPIC: "building/weather"
@@ -88,6 +89,15 @@ services:
         published: 5601
     depends_on:
       - elasticsearch
+
+  mail:
+    image: mailhog/mailhog
+    container_name: mail
+    hostname: mail
+    ports:
+      # web client
+      - target: 8025
+        published: 8025
 
 volumes:
   es_data:

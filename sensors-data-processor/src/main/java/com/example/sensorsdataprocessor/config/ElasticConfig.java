@@ -1,6 +1,7 @@
 package com.example.sensorsdataprocessor.config;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.ml.ElasticsearchMlClient;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import com.example.sensorsdataprocessor.config.properties.ElasticProperties;
@@ -32,6 +33,11 @@ public class ElasticConfig {
         var transport = new RestClientTransport(restClient, new JacksonJsonpMapper(objectMapper));
 
         return new ElasticsearchClient(transport);
+    }
+
+    @Bean
+    public ElasticsearchMlClient elasticsearchMlClient(ElasticsearchClient elasticsearchClient) {
+        return elasticsearchClient.ml();
     }
 
 }

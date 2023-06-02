@@ -1,0 +1,33 @@
+###
+POST http://localhost:8080/notifications/direct
+Content-Type: application/json
+X-Tenant: 001
+
+{
+  "email": "receiver10@gmail.com",
+  "jobId": "co2_max_level",
+  "severity": 20,
+  "anomalyRangeFrom": "2023-01-01T00:00:00Z",
+  "anomalyRangeTo": "2023-05-02T00:00:00Z"
+}
+
+###
+POST http://localhost:8080/notifications
+Content-Type: application/json
+X-Tenant: 001
+
+{
+"email": "receiver2@gmail.com",
+"jobId": "max_wave",
+"severity": 1.0
+}
+
+
+###
+GET http://localhost:8080/notifications
+X-Tenant: 001
+
+
+###
+DELETE http://localhost:8080/notifications/647a384360abd44cf3c13d2f
+X-Tenant: 001
